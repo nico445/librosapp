@@ -7,59 +7,63 @@ import { RootStackParams } from '../navigation/Navigation';
 import { useMovieDetails } from '../hooks/useMovieDetails';
 import { MovieDetails } from '../components/MovieDetails';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Search } from '../components/Search';
+import { Reseña} from '../components/Reseña'
 
 const screenHeight = Dimensions.get('screen').height;
 
 
 
-interface Props extends StackScreenProps<RootStackParams, 'DetailScreen'>{};
+interface Props extends StackScreenProps<RootStackParams, 'DetailScreen'> { };
 
-export const DetailScreen = ( { route, navigation }: Props ) => {
+export const DetailScreen = ({ route, navigation }: Props) => {
 
     const movie = route.params;
-    const uri = `https://image.tmdb.org/t/p/w500${ movie.poster_path }`;
+    const uri = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 
-    const { isLoading, cast, movieFull } = useMovieDetails( movie.id );
+    const { isLoading, cast, movieFull } = useMovieDetails(movie.id);
 
 
     return (
 
         <ScrollView>
-            <View style={ styles.imageContainer }>
-                <View style={ styles.imageBorder }>
-                    <Image 
+            <View style={styles.imageContainer}>
+                <View style={styles.imageBorder}>
+                    <Image
                         source={{ uri }}
-                        style={ styles.posterImage }
+                        style={styles.posterImage}
                     />
                 </View>
             </View>
 
-            <View style={ styles.marginContainer }>
-                <Text style={ styles.subTitle }>{ movie.original_title }</Text>
-                <Text style={ styles.title }>{ movie.title }</Text>
+            <View style={styles.marginContainer}>
+                <Text style={styles.subTitle}>{movie.original_title}</Text>
+                <Text style={styles.title}>{movie.title}</Text>
             </View>
 
-            
+
             {
-                isLoading 
-                    ? <ActivityIndicator size={ 35 } color="grey" style={{ marginTop: 20 }} />
-                    : <MovieDetails movieFull={ movieFull! } cast={ cast } />
+                isLoading
+                    ? <ActivityIndicator size={35} color="grey" style={{ marginTop: 20 }} />
+                    : <MovieDetails movieFull={movieFull!} cast={cast} />
             }
 
+                <Reseña></Reseña>
+          
             {/* Boton para cerrar */}
-            <View style={ styles.backButton }>
+            <View style={styles.backButton}>
                 <TouchableOpacity
-                    onPress={() => navigation.pop() }
+                    onPress={() => navigation.pop()}
                 >
-                    <Icon 
+                    <Icon
                         color="white"
                         name="arrow-back-outline"
-                        size={ 60 }
+                        size={60}
                     />
                 </TouchableOpacity>
             </View>
-                
-            
+
+
         </ScrollView>
     )
 }
